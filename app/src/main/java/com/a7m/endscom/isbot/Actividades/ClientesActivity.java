@@ -118,7 +118,7 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
         String SqlSyncInsert = "INSERT INTO clientes (IdVendedor, VENDEDOR, CLIENTE, NOMBRE, LATI, LNGI ) VALUES";
         AsyncHttpClient Cnx = new AsyncHttpClient();
         RequestParams paramentros = new RequestParams();
-
+        pdialog = ProgressDialog.show(this, "","Procesando. Porfavor Espere...", true);
 
         Cursor res =  myDB.getClientePush();
         if (res.getCount()!=0){
@@ -158,17 +158,20 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                 public void onSuccess(int statusCode, org.apache.http.Header[] headers, byte[] responseBody) {
                     if (statusCode==200){
                         myDB.Update(finalLogReg);
+                        pdialog.dismiss();
                     }else{
                         Toast.makeText(ClientesActivity.this, "Problemas de Conexion al Servidor de Recibos", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
                 public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
+                    pdialog.dismiss();
                     Toast.makeText(ClientesActivity.this, "Problemas de Cobertura de datos", Toast.LENGTH_SHORT).show();
                 }
             });
 
         }else{
+            pdialog.dismiss();
             Toast.makeText(ClientesActivity.this, "No hay Datos que Enviar", Toast.LENGTH_SHORT).show();
         }
     }

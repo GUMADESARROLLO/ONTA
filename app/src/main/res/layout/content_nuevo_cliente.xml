@@ -40,7 +40,8 @@
                 android:ems="10"
                 android:hint="@string/hint_nombre"
                 android:inputType="text"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:enabled="false"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
     <LinearLayout
@@ -71,7 +72,8 @@
                 android:ems="10"
                 android:hint="@string/hint_codCl"
                 android:inputType="text"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:enabled="false"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
@@ -105,7 +107,8 @@
                 android:ems="10"
                 android:hint="@string/hint_dir"
                 android:inputType="textEmailAddress"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:enabled="false"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
@@ -139,7 +142,8 @@
                 android:ems="10"
                 android:hint="@string/hint_cedu"
                 android:inputType="textEmailAddress"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:enabled="false"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
@@ -170,7 +174,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/hint_telefono"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:enabled="false"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
     <LinearLayout
