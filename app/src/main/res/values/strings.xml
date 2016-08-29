@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">SCAR</string>
+    <string name="titulo_Activity_login">Acceso</string>
+    <string name="label_edt_login_agente">Agente</string>
+    <string name="label_edt_login_pass">Contraseña</string>
+    <string name="btn_login">Acceder</string>
+    <string name="search_hint">Buscar Cliente</string>
+    <string name="app_label">Buscador</string>
+    <string name="title_activity_agenda">AgendaActivity</string>
+    <string name="title_activity_carrito_pedido">CarritoPedidoActivity</string>
+    <string name="title_activity_lista_producto">LIstaProductoActivity</string>
+    <string name="title_activity_nuevo_cliente">NuevoClienteActivity</string>
+    <string name="title_activity_catalogo_articulo">CatalogoArticuloActivity</string>
+    <string name="hint_nombre">Nombre</string>
+    <string name="hint_telefono">Longitud</string>
+    <string name="hint_dir">Direccion</string>
+    <string name="accion_cancelar">cancelar</string>
+    <string name="accion_aceptar">aceptar</string>
+    <string name="hint_cedu">Latitud</string>
+    <string name="mssg_datos_cliente">Esta Informacion quedara guardada en el Dispositivo</string>
+    <string name="lbl_posicion_btn">Push</string>
+    <string name="hint_codCl">Codigo Cliente</string>
+</resources>

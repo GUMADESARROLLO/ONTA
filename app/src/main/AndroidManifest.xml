@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.a7m.endscom.isbot">
+
+    <uses-permission
+        android:name="android.permission.INTERNET">
+    </uses-permission>
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION">
+    </uses-permission>
+    <uses-permission
+        android:name="android.permission.ACCESS_COARSE_LOCATION">
+    </uses-permission>
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ubica"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
+
+        <activity android:name=".Actividades.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
+
+        <activity
+            android:name=".Actividades.ClientesActivity"
+            android:label="@string/title_activity_agenda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Actividades.CarritoPedidoActivity"
+            android:label="@string/title_activity_carrito_pedido"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Actividades.LIstaProductoActivity"
+            android:label="@string/title_activity_lista_producto"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Actividades.NuevoClienteActivity"
+            android:label="@string/title_activity_nuevo_cliente"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Actividades.CatalogoArticuloActivity"
+            android:label="@string/title_activity_catalogo_articulo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Actividades.ResumenActivity"></activity>
+    </application>
+
+</manifest>

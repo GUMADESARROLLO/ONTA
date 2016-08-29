@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.a7m.endscom.isbot.Actividades.PlanDeTrabajoActivity">
+
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_search_white_24dp"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:title="" />
+    <item
+        android:id="@+id/action_upload"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_cloud_upload_white_24dp"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:title="Subir" />
+    <item
+        android:id="@+id/action_Salir"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_power_settings_new_white_24dp"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:title="Salir" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="Settings"
+        android:visible="false"
+        app:showAsAction="never"/>
+</menu>
