@@ -3,6 +3,8 @@ package com.a7m.endscom.isbot.Adaptadores;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,8 +102,22 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         ImageView childIcon = (ImageView) convertView.findViewById(R.id.child_icon);
-        //childIcon.setColorFilter(ContextCompat.getColor(convertView.getContext(), R.color.colorAccent));
+
+
         childIcon.setImageResource(childRow.getIcon());
+
+        if (childRow.getIcon()!= 2130837581){
+            Log.d("ICON",String.valueOf(childRow.getIcon()));
+        }
+        switch (childRow.getEstado()){
+            case "0"://SIN DATOS
+                childIcon.setColorFilter(ContextCompat.getColor(convertView.getContext(), R.color.ISB_red));
+                break;
+            case "1":
+                childIcon.setColorFilter(ContextCompat.getColor(convertView.getContext(), R.color.colorAccent));
+                break;
+        }
+
 
         final TextView childText = (TextView) convertView.findViewById(R.id.child_text_planTrabajo  );
         childText.setText(childRow.getText().trim());
@@ -112,16 +128,24 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         final View finalConvertView = convertView;
+
         childText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ints = new Intent(finalConvertView.getContext(), NuevoClienteActivity.class);
+                if (Integer.parseInt(childRow.getEstado())==0){
+                    Intent ints = new Intent(finalConvertView.getContext(), NuevoClienteActivity.class);
+                    ints.putExtra("IdCliente",childRow.getText());
+                    ints.putExtra("ClsNombre",childRow.getNombre());
+                    ints.putExtra("CLdir",childRow.getDirec());
+                    finalConvertView.getContext().startActivity(ints);
+                }else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(finalConvertView.getContext());
+                    builder.setMessage("El Cliente "+ childRow.getText() +" ya fue Registrado")
+                            .setNegativeButton("OK",null)
+                            .create()
+                            .show();
+                }
 
-                ints.putExtra("IdCliente",childRow.getText());
-                ints.putExtra("ClsNombre",childRow.getNombre());
-                ints.putExtra("CLdir",childRow.getDirec());
-
-                finalConvertView.getContext().startActivity(ints);
 
                 //finalConvertView.getContext().startActivity(new Intent(finalConvertView.getContext(), NuevoClienteActivity.class));
 

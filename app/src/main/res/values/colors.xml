@@ -6,4 +6,5 @@
     <color name="ISB_blanco">#ffffff</color>
     <color name="ISB_negro">#00000f</color>
     <color name="ISB_gris_bajo">#c2c2c2</color>
+    <color name="ISB_red">#ff0000</color>
 </resources>

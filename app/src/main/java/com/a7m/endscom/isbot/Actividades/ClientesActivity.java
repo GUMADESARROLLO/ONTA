@@ -267,7 +267,7 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                             icon = R.drawable.ic_done_all_black_24dp;
                             break;
                     }
-                    childRows.add(new ChildRow(icon,res.getString(0),res.getString(1),res.getString(2)));
+                    childRows.add(new ChildRow(icon,res.getString(0),res.getString(1),res.getString(2),res.getString(4)));
                 } while(res.moveToNext());
             }
         }

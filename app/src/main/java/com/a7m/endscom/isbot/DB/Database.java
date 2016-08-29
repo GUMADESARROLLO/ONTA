@@ -134,7 +134,7 @@ public class Database extends SQLiteOpenHelper {
     }
     public Cursor getData(String Table){
         SQLiteDatabase db = this.getWritableDatabase();
-        String Query = "SELECT * FROM " + Table;
+        String Query = "SELECT * FROM " + Table + " ORDER BY ESTADO ASC";
         Cursor res = db.rawQuery(Query ,null);
         return res;
     }
