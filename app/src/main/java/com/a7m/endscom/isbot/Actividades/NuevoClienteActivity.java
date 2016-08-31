@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -55,6 +56,15 @@ public class NuevoClienteActivity extends AppCompatActivity {
         CodCliente.setText(iCliente.getStringExtra("IdCliente"));
         Nombre.setText(iCliente.getStringExtra("ClsNombre"));
         Direccion.setText(iCliente.getStringExtra("CLdir"));
+        Cursor logRes =  myDB.getPosicion(iCliente.getStringExtra("IdCliente"));
+        if (logRes.getCount()!=0){
+            if (logRes.moveToFirst()) {
+                do {
+                    latitud.setText(logRes.getString(4));
+                    longitud.setText(logRes.getString(5));
+                } while(logRes.moveToNext());
+            }
+        }
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
@@ -102,7 +112,7 @@ public class NuevoClienteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (location!=null){
-                    if (myDB.insertPosicion(Agente.getIdVendedor(),Agente.getNombre(),CodCliente.getText().toString(),Nombre.getText().toString(),latitud.getText().toString(),longitud.getText().toString())){
+                    if (myDB.insertPosicion(Agente.getIdVendedor(),Agente.getNombre(),CodCliente.getText().toString(),Nombre.getText().toString(),latitud.getText().toString(),longitud.getText().toString(),iCliente.getStringExtra("Estado"))){
                         myDB.UpdateEstado(CodCliente.getText().toString(),"1");
                         finish();
                     }else{
@@ -112,10 +122,6 @@ public class NuevoClienteActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(NuevoClienteActivity.this, "El Dispositivo no sea Triangulado", Toast.LENGTH_SHORT).show();
                 }
-
-                ;
-
-                //finish();
             }
         });
 

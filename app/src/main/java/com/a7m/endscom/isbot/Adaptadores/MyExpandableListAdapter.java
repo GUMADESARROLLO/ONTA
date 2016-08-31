@@ -106,9 +106,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
         childIcon.setImageResource(childRow.getIcon());
 
-        if (childRow.getIcon()!= 2130837581){
-            Log.d("ICON",String.valueOf(childRow.getIcon()));
-        }
+
         switch (childRow.getEstado()){
             case "0"://SIN DATOS
                 childIcon.setColorFilter(ContextCompat.getColor(convertView.getContext(), R.color.ISB_red));
@@ -126,7 +124,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         childDir.setText(childRow.getNombre().trim());
 
 
-// TODO: 29/08/2016 VALIDA LA SESION DEL AGENTE
+
         final View finalConvertView = convertView;
 
         childText.setOnClickListener(new View.OnClickListener() {

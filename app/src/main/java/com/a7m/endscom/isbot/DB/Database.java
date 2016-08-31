@@ -103,16 +103,22 @@ public class Database extends SQLiteOpenHelper {
             return true;
         }
     }
-    public boolean insertPosicion(String idVendedor, String nombreVendedor,String codCliente,String NombreCliente,String longi,String lati){
+    public boolean insertPosicion(String idVendedor, String nombreVendedor,String codCliente,String NombreCliente,String longi,String lati,String Estado){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("IdVendedor",idVendedor);
-        contentValues.put("VENDEDOR",nombreVendedor);
-        contentValues.put("CLIENTE",codCliente);
-        contentValues.put("NOMBRE",NombreCliente);
-        contentValues.put("LATI",longi);
-        contentValues.put("LNGI",lati);
-        long result = db.insert("PUSH",null,contentValues);
+        final long result;
+        if (Estado!="0"){
+            contentValues.put("ESTADO", "1");
+            result  = db.update("CLIENTES", contentValues, "CLIENTE" + "= '" + codCliente + "'", null);
+        }else{
+            contentValues.put("IdVendedor",idVendedor);
+            contentValues.put("VENDEDOR",nombreVendedor);
+            contentValues.put("CLIENTE",codCliente);
+            contentValues.put("NOMBRE",NombreCliente);
+            contentValues.put("LATI",longi);
+            contentValues.put("LNGI",lati);
+            result = db.insert("PUSH",null,contentValues);
+        }
         if (result == -1){
             return false;
         }else{
@@ -135,6 +141,12 @@ public class Database extends SQLiteOpenHelper {
     public Cursor getData(String Table){
         SQLiteDatabase db = this.getWritableDatabase();
         String Query = "SELECT * FROM " + Table + " ORDER BY ESTADO ASC";
+        Cursor res = db.rawQuery(Query ,null);
+        return res;
+    }
+    public Cursor getPosicion(String Clientes){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String Query = "SELECT * FROM PUSH WHERE CLIENTE in("+Clientes+")";
         Cursor res = db.rawQuery(Query ,null);
         return res;
     }

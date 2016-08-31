@@ -81,9 +81,6 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         parentList = new ArrayList<ParentRow>();
         showTheseParentList = new ArrayList<ParentRow>();
-        displayList();
-        expandAll();
-
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -95,7 +92,7 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                     }
                 });
             }
-        }, 0, 5000);
+        }, 0, 1800000);
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -107,6 +104,7 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                 });
             }
         }, 0, interval);
+
 
 
     }
