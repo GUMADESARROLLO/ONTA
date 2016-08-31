@@ -126,7 +126,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         childDir.setText(childRow.getNombre().trim());
 
 
-
+// TODO: 29/08/2016 VALIDA LA SESION DEL AGENTE
         final View finalConvertView = convertView;
 
         childText.setOnClickListener(new View.OnClickListener() {

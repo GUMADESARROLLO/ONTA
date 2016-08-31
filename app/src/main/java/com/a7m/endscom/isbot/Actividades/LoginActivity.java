@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void ServerLogin() {
+        Toast.makeText(LoginActivity.this, Agente.getPassword(), Toast.LENGTH_SHORT).show();
         AsyncHttpClient Cnx = new AsyncHttpClient();
         RequestParams paramentros = new RequestParams();
         paramentros.put("U",Agente.getIdVendedor());

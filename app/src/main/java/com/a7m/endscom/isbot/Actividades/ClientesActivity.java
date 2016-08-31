@@ -65,7 +65,7 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                 Toast.makeText(ClientesActivity.this, "OOK", Toast.LENGTH_SHORT).show();
             }
         });
-
+        int interval = 1000*60*60*3; /* tres horas */
         myDB = new Database(this);
 
         setTitle("CLIENTES [ "+ Agente.getIdVendedor() +" ]");
@@ -96,6 +96,19 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                 });
             }
         }, 0, 5000);
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        knowPush();
+                    }
+                });
+            }
+        }, 0, interval);
+
+
     }
 
     private String knowPosiciones(){
