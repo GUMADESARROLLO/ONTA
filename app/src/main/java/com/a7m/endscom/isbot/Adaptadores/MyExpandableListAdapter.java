@@ -132,19 +132,13 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         childText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.parseInt(childRow.getEstado())==0){
-                    Intent ints = new Intent(finalConvertView.getContext(), NuevoClienteActivity.class);
-                    ints.putExtra("IdCliente",childRow.getText());
-                    ints.putExtra("ClsNombre",childRow.getNombre());
-                    ints.putExtra("CLdir",childRow.getDirec());
-                    finalConvertView.getContext().startActivity(ints);
-                }else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(finalConvertView.getContext());
-                    builder.setMessage("El Cliente "+ childRow.getText() +" ya fue Registrado")
-                            .setNegativeButton("OK",null)
-                            .create()
-                            .show();
-                }
+
+                Intent ints = new Intent(finalConvertView.getContext(), NuevoClienteActivity.class);
+                ints.putExtra("IdCliente",childRow.getText());
+                ints.putExtra("ClsNombre",childRow.getNombre());
+                ints.putExtra("CLdir",childRow.getDirec());
+                ints.putExtra("Estado",childRow.getEstado());
+                finalConvertView.getContext().startActivity(ints);
 
 
                 //finalConvertView.getContext().startActivity(new Intent(finalConvertView.getContext(), NuevoClienteActivity.class));
