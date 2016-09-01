@@ -85,7 +85,7 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
         showTheseParentList = new ArrayList<ParentRow>();
         displayList();
         expandAll();
-      /*  new Timer().scheduleAtFixedRate(new TimerTask() {
+        new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
@@ -96,7 +96,7 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                     }
                 });
             }
-        }, 0, 5000);*/
+        }, 0, 5000);
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {

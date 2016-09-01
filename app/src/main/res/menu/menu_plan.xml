@@ -16,7 +16,7 @@
         android:icon="@drawable/ic_cloud_upload_white_24dp"
         app:showAsAction="ifRoom|collapseActionView"
         android:title="Subir"
-        android:visible="true"/>
+        android:visible="false"/>
     <item
         android:id="@+id/action_Salir"
         android:orderInCategory="100"
