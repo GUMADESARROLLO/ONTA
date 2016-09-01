@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -81,7 +83,9 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         parentList = new ArrayList<ParentRow>();
         showTheseParentList = new ArrayList<ParentRow>();
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+        displayList();
+        expandAll();
+      /*  new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
@@ -92,7 +96,7 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                     }
                 });
             }
-        }, 0, 1800000);
+        }, 0, 5000);*/
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -126,10 +130,11 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
     private void knowPush(){
         String logReg ="";
         boolean upload = false;
-        String SqlSyncInsert = "INSERT INTO clientes (IdVendedor, VENDEDOR, CLIENTE, NOMBRE, LATI, LNGI ) VALUES";
+        //String SqlSyncInsert = "INSERT INTO clientes (IdVendedor, VENDEDOR, CLIENTE, NOMBRE, LATI, LNGI ) VALUES";
+        String SqlSyncInsert = "";
         AsyncHttpClient Cnx = new AsyncHttpClient();
         RequestParams paramentros = new RequestParams();
-        pdialog = ProgressDialog.show(this, "","Procesando. Porfavor Espere...", true);
+        pdialog = ProgressDialog.show(this, "","Procesando, ya casi terminamos...", true);
 
         Cursor res =  myDB.getClientePush();
         if (res.getCount()!=0){
@@ -148,26 +153,24 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                 if (resLOGS.moveToFirst()) {
                     do {
                         SqlSyncInsert +=
-                                "("+
+                                "CALL PUSH_DATO ("+
                                         "'"+resLOGS.getString(0)+"',"+
                                         "'"+resLOGS.getString(1)+"',"+
                                         "'"+resLOGS.getString(2)+"',"+
                                         "'"+resLOGS.getString(3)+"',"+
                                         "'"+resLOGS.getString(4)+"',"+
                                         "'"+resLOGS.getString(5)+"'"
-                                        +"),";
+                                        +");";
                     } while(resLOGS.moveToNext());
-                    SqlSyncInsert = SqlSyncInsert.substring(0,SqlSyncInsert.length()-1);
                 }
             }
-
-
             paramentros.put("D",SqlSyncInsert);
             final String finalLogReg = logReg;
             Cnx.post(Dir.getURL_doom(), paramentros, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, org.apache.http.Header[] headers, byte[] responseBody) {
                     if (statusCode==200){
+                        Toast.makeText(ClientesActivity.this, "Correcto", Toast.LENGTH_SHORT).show();
                         myDB.Update(finalLogReg);
                         pdialog.dismiss();
                     }else{
@@ -216,7 +219,6 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                         pdialog.dismiss();
                         Toast.makeText(ClientesActivity.this, "Master Actualizado", Toast.LENGTH_SHORT).show();
                     }else{
-                        //adapter2.notifyDataSetChanged();
                         pdialog.dismiss();
 
                         Toast.makeText(ClientesActivity.this, "Error de Actualizacion de datos", Toast.LENGTH_SHORT).show();
@@ -235,8 +237,6 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
             }
 
         });
-
-
     }
     public ArrayList<String> crearJson(String response){
         ArrayList<String> listado = new ArrayList<String>();

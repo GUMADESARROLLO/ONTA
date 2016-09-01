@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.ParcelUuid;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.a7m.endscom.isbot.Clases.Usuario;
 
@@ -106,10 +107,15 @@ public class Database extends SQLiteOpenHelper {
     public boolean insertPosicion(String idVendedor, String nombreVendedor,String codCliente,String NombreCliente,String longi,String lati,String Estado){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        ContentValues UpdtPush = new ContentValues();
         final long result;
-        if (Estado!="0"){
+        if (Integer.parseInt(Estado)!=0){
             contentValues.put("ESTADO", "1");
-            result  = db.update("CLIENTES", contentValues, "CLIENTE" + "= '" + codCliente + "'", null);
+            db.update("CLIENTES", contentValues, "CLIENTE" + "= '" + codCliente + "'", null);
+
+            UpdtPush.put("LATI",longi);
+            UpdtPush.put("LNGI",lati);
+            result = db.update("PUSH", UpdtPush, "CLIENTE" + "= '" + codCliente + "'", null);
         }else{
             contentValues.put("IdVendedor",idVendedor);
             contentValues.put("VENDEDOR",nombreVendedor);
@@ -158,7 +164,7 @@ public class Database extends SQLiteOpenHelper {
     }
     public Cursor getClientePush(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String Query = "SELECT * FROM CLIENTES WHERE ESTADO in('1')";
+        String Query = "SELECT * FROM CLIENTES WHERE ESTADO='1'";
         Cursor res = db.rawQuery(Query ,null);
         return res;
     }
