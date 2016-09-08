@@ -10,6 +10,7 @@ public class ApiRest {
     private static String URL_login = "http://"+ SERVER +"/ONTA/Login.php";
     private static String URL_mtlc = "http://"+ SERVER +"/ONTA/MTCL2.php";
     private static String URL_doom = "http://"+ SERVER +"/ONTA/Doom.php";
+    private static String URL_updaload = "http://"+ SERVER +"/ONTA/upload.php";
 
     public ApiRest() {
     }
@@ -20,12 +21,11 @@ public class ApiRest {
     public static String getURL_mtlc() {
         return URL_mtlc;
     }
-
     public static String getURL_doom() {
         return URL_doom;
     }
 
-    public static void setURL_doom(String URL_doom) {
-        ApiRest.URL_doom = URL_doom;
+    public static String getURL_updaload() {
+        return URL_updaload;
     }
 }

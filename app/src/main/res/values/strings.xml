@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SCAR</string>
+    <string name="app_name">There</string>
     <string name="titulo_Activity_login">Acceso</string>
     <string name="label_edt_login_agente">Agente</string>
     <string name="label_edt_login_pass">Contraseña</string>
@@ -20,4 +20,5 @@
     <string name="mssg_datos_cliente">Esta Informacion quedara guardada en el Dispositivo</string>
     <string name="lbl_posicion_btn">Push</string>
     <string name="hint_codCl">Codigo Cliente</string>
+    <string name="label_descrip_app">Ingrese con su cuenta.</string>
 </resources>

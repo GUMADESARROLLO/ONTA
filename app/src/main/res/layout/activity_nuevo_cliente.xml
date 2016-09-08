@@ -27,8 +27,9 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="top|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_save_white_24dp" />
+        android:src="@drawable/ic_save_white_24dp"
+        app:backgroundTint="@color/ISB_alert"/>
 
 </android.support.design.widget.CoordinatorLayout>

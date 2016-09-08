@@ -1,15 +1,23 @@
 package com.a7m.endscom.isbot.Actividades;
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -17,15 +25,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.a7m.endscom.isbot.Clases.ApiRest;
 import com.a7m.endscom.isbot.Clases.Usuario;
 import com.a7m.endscom.isbot.DB.Database;
 import com.a7m.endscom.isbot.R;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class NuevoClienteActivity extends AppCompatActivity {
     Intent iCliente;
+    String Folder = "BaseImagenes";
     TextView Nombre,Direccion,CodCliente,latitud,longitud;
     LocationManager locationManager;
     Location location;
@@ -33,6 +52,7 @@ public class NuevoClienteActivity extends AppCompatActivity {
     Usuario Agente;
     AlertDialog alert = null;
     Database myDB;
+    private ImageView img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +63,21 @@ public class NuevoClienteActivity extends AppCompatActivity {
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        final Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        final File imagesFolder = new File(Environment.getExternalStorageDirectory(), Folder);
+        imagesFolder.mkdirs();
         iCliente = getIntent();
+        img = (ImageView)this.findViewById(R.id.foto);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                File image = new File(imagesFolder, iCliente.getStringExtra("IdCliente") + ".jpg");
+                Uri uriSavedImage = Uri.fromFile(image);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+                startActivityForResult(cameraIntent, 1);
+            }
+        });
+
 
         myDB = new Database(this);
 
@@ -128,9 +162,31 @@ public class NuevoClienteActivity extends AppCompatActivity {
         findViewById(R.id.idbtnClla).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               MostrarLocalizacion(location);
+
+               //MostrarLocalizacion(location);
+                if (location!=null){
+                    postImage(CodCliente.getText().toString(),Environment.getExternalStorageDirectory()+"/"+ Folder + "/" + iCliente.getStringExtra("IdCliente") + ".jpg",NuevoClienteActivity.this);
+                    if (myDB.insertPosicion(Agente.getIdVendedor(),Agente.getNombre(),CodCliente.getText().toString(),Nombre.getText().toString(),latitud.getText().toString(),longitud.getText().toString(),iCliente.getStringExtra("Estado"))){
+                        myDB.UpdateEstado(CodCliente.getText().toString(),"1");
+                        finish();
+                    }else{
+                        Toast.makeText(NuevoClienteActivity.this, "Ocurrio un problema, no se pudo guardar la posición", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    Toast.makeText(NuevoClienteActivity.this, "El Dispositivo no sea Triangulado", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
+
+        if (new File(Environment.getExternalStorageDirectory(), Folder + "/" + iCliente.getStringExtra("IdCliente") + ".jpg").exists()){
+            img.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/"+Folder+"/"+iCliente.getStringExtra("IdCliente")+".jpg"));
+        }
+
+        //uploadFoto(new File(Environment.getExternalStorageDirectory(), Folder + "/" + iCliente.getStringExtra("IdCliente") + ".jpg"));
+
     }
     public void MostrarLocalizacion(Location loc){
         if (loc!=null){
@@ -169,5 +225,46 @@ public class NuevoClienteActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Bitmap bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/"+Folder+"/"+iCliente.getStringExtra("IdCliente")+".jpg");
+            img.setImageBitmap(bMap);
+        }
+    }
+    public static void postImage(String codCls,String ImageLink, final Context context){
+        final ProgressDialog pdialog;
+        RequestParams params = new RequestParams();
+        pdialog = ProgressDialog.show(context, "","Procesando, ya casi terminamos...", true);
+        try {
+            params.put("data",new FileInputStream(ImageLink), "image/jpg");
+            params.put("CLiente",codCls);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(ApiRest.getURL_updaload(), params, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, byte[] responseBody) {
+                if (statusCode==200){
+                    Toast.makeText(context, "Correcto", Toast.LENGTH_SHORT).show();
+                    pdialog.dismiss();
+                }else{
+                    Toast.makeText(context, "Problemas de Conexion al Servidor de Recibos", Toast.LENGTH_SHORT).show();
+                    pdialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode,org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+
+
 
 }

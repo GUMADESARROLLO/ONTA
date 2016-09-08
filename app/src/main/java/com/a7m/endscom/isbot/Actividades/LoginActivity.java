@@ -1,12 +1,19 @@
 package com.a7m.endscom.isbot.Actividades;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Message;
 import android.preference.PreferenceActivity;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +41,24 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        //extraemos el drawable en un bitmap
+        Drawable originalDrawable = getResources().getDrawable(R.drawable.avatar);
+        Bitmap originalBitmap = ((BitmapDrawable) originalDrawable).getBitmap();
+
+        //creamos el drawable redondeado
+        RoundedBitmapDrawable roundedDrawable =
+                RoundedBitmapDrawableFactory.create(getResources(), originalBitmap);
+
+        //asignamos el CornerRadius
+        roundedDrawable.setCornerRadius(originalBitmap.getHeight());
+
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+
+        imageView.setImageDrawable(roundedDrawable);
+
+
+
         txtAgente = (TextView) findViewById(R.id.edtAgente);
         txtPass = (TextView) findViewById(R.id.edtPass);
 
@@ -44,14 +69,27 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.btnOK).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Agente.setIdVendedor(txtAgente.getText().toString().toUpperCase());
-                Agente.setPassword(txtPass.getText().toString().toUpperCase());
-                check();
+                txtAgente.setError(null);
+                txtPass.setError(null);
+                if (TextUtils.isEmpty(txtAgente.getText())){
+                    txtAgente.setError("Nombre del Vendedor requerido");
+                }else{
+                    if (TextUtils.isEmpty(txtPass.getText())){
+                        txtPass.setError("Ingrese la contraseña");
+                    }else{
+                        Agente.setIdVendedor(txtAgente.getText().toString().toUpperCase());
+                        Agente.setPassword(txtPass.getText().toString().toUpperCase());
+                        check();
+                    }
+                }
+
             }
         });
 
     }
     private boolean check(){
+
+
         if (myDB.ifExists(Agente.getIdVendedor(),Agente.getPassword())){
             startActivity(new Intent(this,ClientesActivity.class));
 
