@@ -1,158 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/ISB_gris_bajo"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-
-
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Actividades.LoginActivity">
-
-
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="4dp"
-        card_view:cardUseCompatPadding="true">
-
+    android:background="#ff3eaff9"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
     <LinearLayout
-                android:layout_marginTop="30dp"
-                android:id="@+id/email_login_form"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:background="#ffffffff">
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/avatar"
-                        android:layout_centerInParent="true"
-                        android:id="@+id/imageView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="24sp"
+            android:textColor="#ff3eaff9"
+            android:layout_marginBottom="16dp"/>
 
-                    <TextView
-                        android:layout_marginTop="10dp"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_descrip_app"
-                        android:gravity="center"
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/avatar"
+            android:layout_centerInParent="true"
+            android:id="@+id/imageView" />
 
-                        android:textSize="20sp"
-                        />
-                </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:id="@+id/area_nombre"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_marginLeft="15dp"
-                android:id="@+id/img_nombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_assignment_ind_white_24dp"
-                android:tint="@color/button_material_dark" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/til_nombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp">
-
-                <EditText
-                    android:id="@+id/edtAgente"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="F17"
-                    android:ems="10"
-                    android:hint="@string/label_edt_login_agente"
-                    android:inputType="text"
-                    android:singleLine="true"
-                    style="@style/ClssEditText"/>
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_assignment_ind_white_24dp"
-                android:tint="@color/button_material_dark" />
-
-            <android.support.design.widget.TextInputLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp">
-
-                <EditText
-                    android:inputType="textPassword"
-                    android:id="@+id/edtPass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="EC0375"
-                    android:ems="10"
-                    android:hint="@string/label_edt_login_pass"
-                    android:singleLine="true"
-
-                    style="@style/ClssEditText"/>
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
-                    <Button
-                        android:id="@+id/btnOK"
-                        android:text="@string/btn_login"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                         />
-                </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:gravity="center"
-                android:text="Copyright © 2016, UNIMARK S.A."
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:gravity="bottom|center"
-                android:text="v 1.1.0"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-            </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="F17"
+                android:id="@+id/edtAgente"
+                android:hint="@string/label_edt_login_agente"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="EC0375"
+                android:id="@+id/edtPass"
+                android:inputType="textPassword"
+                android:hint="@string/label_edt_login_pass"/>
+        </android.support.design.widget.TextInputLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnOK"
+            android:background="#ff3eaff9"
+            android:textColor="#ffffff"
+            android:text="@string/btn_login"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Copyright © 2016, UNIMARK S.A."/>
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="v1.1.0"/>
 
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
 
-
-</LinearLayout>
+</RelativeLayout>
