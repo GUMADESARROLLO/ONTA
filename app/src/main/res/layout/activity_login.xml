@@ -39,7 +39,6 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="F17"
                 android:id="@+id/edtAgente"
                 android:hint="@string/label_edt_login_agente"/>
         </android.support.design.widget.TextInputLayout>
@@ -50,15 +49,14 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="EC0375"
                 android:id="@+id/edtPass"
                 android:inputType="textPassword"
                 android:hint="@string/label_edt_login_pass"/>
         </android.support.design.widget.TextInputLayout>
         <Button
+            android:id="@+id/btnOK"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnOK"
             android:background="#ff3eaff9"
             android:textColor="#ffffff"
             android:text="@string/btn_login"
@@ -74,7 +72,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="v1.1.0"/>
+            android:text="v1.0.0"/>
 
     </LinearLayout>
 
