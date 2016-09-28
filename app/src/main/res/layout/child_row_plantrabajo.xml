@@ -16,7 +16,7 @@ android:layout_height="match_parent">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@drawable/ic_done_black_24dp"
+            android:src="@drawable/ic_add_location_black_24dp"
             android:id="@+id/child_icon"
             android:layout_height="fill_parent"
             android:layout_width="24dp"

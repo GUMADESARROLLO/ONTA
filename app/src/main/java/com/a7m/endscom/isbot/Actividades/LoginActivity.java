@@ -1,18 +1,22 @@
 package com.a7m.endscom.isbot.Actividades;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Message;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,36 +35,39 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG ="Login" ;
     TextView txtAgente,txtPass;
     Database myDB;
     ApiRest Dir;
     Usuario Agente;
     Mensajes ScreenAlert;
+    CheckBox chkb;
+    private boolean checked;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        //extraemos el drawable en un bitmap
         Drawable originalDrawable = getResources().getDrawable(R.drawable.avatar);
         Bitmap originalBitmap = ((BitmapDrawable) originalDrawable).getBitmap();
-
-        //creamos el drawable redondeado
         RoundedBitmapDrawable roundedDrawable =
                 RoundedBitmapDrawableFactory.create(getResources(), originalBitmap);
-
-        //asignamos el CornerRadius
         roundedDrawable.setCornerRadius(originalBitmap.getHeight());
-
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-
         imageView.setImageDrawable(roundedDrawable);
+
+
 
 
 
         txtAgente = (TextView) findViewById(R.id.edtAgente);
         txtPass = (TextView) findViewById(R.id.edtPass);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        checked = preferences.getBoolean("pref", false);
 
 
         myDB = new Database(this);
@@ -85,23 +92,29 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+        if (checked==true){
+            startActivity(new Intent(this,ClientesActivity.class));
+            finish();
+        }
 
     }
     private boolean check(){
-
-
-        if (myDB.ifExists(Agente.getIdVendedor(),Agente.getPassword())){
+        if (myDB.ifExists(Agente.getIdVendedor(),Agente.getPassword(),this)){
+            checked = !checked;
+            editor.putString("codVendedor", Agente.getIdVendedor());
+            editor.putString("Pass", Agente.getPassword());
+            editor.putBoolean("pref", checked);
+            editor.apply();
             startActivity(new Intent(this,ClientesActivity.class));
-
             finish();
         }else{
             ServerLogin();
         }
+
         return false;
     }
 
     private void ServerLogin() {
-
         AsyncHttpClient Cnx = new AsyncHttpClient();
         RequestParams paramentros = new RequestParams();
         paramentros.put("U",Agente.getIdVendedor());
@@ -122,13 +135,13 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 }else{
-                    Toast.makeText(LoginActivity.this, "Sin Cobertura de datos.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "No Tuvimos respuesta del Servidor.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(LoginActivity.this, "Sin Cobertura de datos Nivel 2.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Problema de Cobertura de datos.", Toast.LENGTH_SHORT).show();
             }
 
         });

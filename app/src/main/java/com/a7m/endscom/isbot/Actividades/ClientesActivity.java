@@ -3,9 +3,11 @@ package com.a7m.endscom.isbot.Actividades;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 
@@ -48,7 +50,9 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
     private ArrayList<ParentRow> parentList = new ArrayList<ParentRow>();
     private ArrayList<ParentRow> showTheseParentList = new ArrayList<ParentRow>();
     private MenuItem searchItem;
-
+    private boolean checked;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
     Usuario Agente;
     Database myDB;
     ProgressDialog pdialog;
@@ -60,15 +64,14 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         myList = (ExpandableListView) findViewById(R.id.ExpPlan);
-
-        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(ClientesActivity.this, "OOK", Toast.LENGTH_SHORT).show();
-            }
-        });
         int interval = 1000*60*60*3; /* tres horas */
         myDB = new Database(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        Agente.setIdVendedor(preferences.getString("codVendedor","null"));
+        Agente.setPassword(preferences.getString("NombreVendedor", "null"));
+        Agente.setNombre(preferences.getString("Pass","null"));
+        checked = preferences.getBoolean("pref",false);
 
         setTitle("CLIENTES [ "+ Agente.getIdVendedor() +" ]");
 
@@ -345,6 +348,9 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.action_Salir:
+                checked = !checked;
+                editor.putBoolean("pref", checked);
+                editor.apply();
                 finish();
                 break;
             case R.id.action_upload:

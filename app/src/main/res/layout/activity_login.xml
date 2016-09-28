@@ -37,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtAgente"
@@ -50,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtPass"
+
                 android:inputType="textPassword"
                 android:hint="@string/label_edt_login_pass"/>
         </android.support.design.widget.TextInputLayout>
@@ -62,6 +64,7 @@
             android:text="@string/btn_login"
             android:textSize="18sp"
             android:layout_marginTop="16dp"/>
+
         <TextView
             android:layout_marginTop="10dp"
             android:gravity="center"

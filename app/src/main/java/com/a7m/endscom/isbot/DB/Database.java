@@ -2,10 +2,12 @@ package com.a7m.endscom.isbot.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.ParcelUuid;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -60,14 +62,19 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS PUSH");
         onCreate(db);
     }
-    public boolean ifExists(String U, String P){
+    public boolean ifExists(String U, String P,Context cntx){
         SQLiteDatabase db = this.getWritableDatabase();
         Boolean ok = false;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(cntx);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(cntx).edit();
+
         String Query = "SELECT * FROM Usuarios WHERE IdVendedor="+ '"' + U.trim() + '"' +" and Password="+ '"' +P.trim() + '"' +"";
         Cursor res = db.rawQuery(Query ,null);
         if (res.getCount()!=0){
             if (res.moveToFirst()) {
                 do {
+                    editor.putString("NombreVendedor", res.getString(1));
+                    editor.apply();
                     Agente.setNombre(res.getString(1));
                 } while(res.moveToNext());
 
