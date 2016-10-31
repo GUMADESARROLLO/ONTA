@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -42,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ClientesActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,SearchView.OnCloseListener{
+public class ClientesActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,SearchView.OnCloseListener {
     private SearchManager searchManager;
     private android.widget.SearchView searchView;
     private MyExpandableListAdapter listAdapter;
@@ -360,5 +361,7 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }
